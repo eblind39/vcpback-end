@@ -19,14 +19,15 @@ import {JwtStrategy} from './jwt.strategy'
             useFactory: async (configService: ConfigService) => ({
                 secret: configService.get<string>('JWT_SECRET'),
                 signOptions: {
-                    expiresIn: `${configService.get<string>(
+                    expiresIn: `${configService.get<number>(
                         'JWT_EXPIRATION_TIME',
-                    )}`,
+                    )}s`,
                 },
             }),
         }),
     ],
     providers: [AuthenticationService, LocalStrategy, JwtStrategy],
     controllers: [AuthenticationController],
+    exports: [AuthenticationService],
 })
 export class AuthenticationModule {}
