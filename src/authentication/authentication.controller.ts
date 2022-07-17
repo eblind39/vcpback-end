@@ -24,7 +24,7 @@ export class AuthenticationController {
     ) {}
 
     @UseGuards(JwtAuthenticationGuard)
-    @Get()
+    @Get('whoami')
     authenticate(@Req() request: RequestWithUser) {
         const user: User = request.user
         user.password = undefined
@@ -41,7 +41,10 @@ export class AuthenticationController {
     @Post('login')
     async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
         const user: User = request.user
-        const cookie = this.authenticationService.getCookieWithJwtToken(user.id)
+        const cookie = this.authenticationService.getCookieWithJwtToken(
+            user.id,
+            user.name,
+        )
         response.setHeader('Set-Cookie', cookie)
         user.password = undefined
         return response.send(user)

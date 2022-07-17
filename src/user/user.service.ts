@@ -12,7 +12,6 @@ export class UserService {
 
     async create(userData: CreateUserDto) {
         const newUser: User = await this.userRepository.create(userData)
-        console.log(newUser)
         await this.userRepository.save(newUser)
         return newUser
     }

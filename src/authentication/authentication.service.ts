@@ -15,8 +15,9 @@ export class AuthenticationService {
         private readonly configService: ConfigService,
     ) {}
 
-    public getCookieWithJwtToken(userId: number) {
-        const payload: TokenPayload = {userId}
+    public getCookieWithJwtToken(userId: number, name: string) {
+        const payload: TokenPayload = {userId, name} // , name
+
         const token = this.jwtService.sign(payload)
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get<number>(
             'JWT_EXPIRATION_TIME',
@@ -38,6 +39,7 @@ export class AuthenticationService {
             createdUser.password = undefined
             return createdUser
         } catch (error) {
+            console.log(error)
             if (error?.code === PostgresErrorCode.UniqueValidation) {
                 throw new HttpException(
                     'Email already in use',
