@@ -1,4 +1,4 @@
-import {IsEmail, IsNotEmpty, IsString, Length} from 'class-validator'
+import {IsEmail, IsNotEmpty, IsNumber, IsString, Length} from 'class-validator'
 
 export class CreateUserDto {
     @IsString()
@@ -20,4 +20,7 @@ export class CreateUserDto {
     @IsString()
     @Length(0, 1500)
     photourl: string
+
+    @IsNumber()
+    roleId: number
 }

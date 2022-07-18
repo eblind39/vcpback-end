@@ -1,4 +1,11 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
+import {Role} from '../role/role.entity'
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    OneToOne,
+    JoinColumn,
+} from 'typeorm'
 
 @Entity()
 export class User {
@@ -16,4 +23,8 @@ export class User {
 
     @Column({type: 'varchar', length: 1500})
     photourl: string
+
+    @OneToOne(type => Role)
+    @JoinColumn({name: 'roleId'})
+    role: Role
 }
