@@ -41,9 +41,9 @@ export class AuthenticationController {
     @Post('login')
     async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
         const user: User = request.user
-        const cookie = this.authenticationService.getCookieWithJwtToken(
+        const cookie = await this.authenticationService.getCookieWithJwtToken(
             user.id,
-            user.name,
+            user.role.id,
         )
         response.setHeader('Set-Cookie', cookie)
         user.password = undefined

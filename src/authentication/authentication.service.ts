@@ -1,22 +1,26 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
-import {UserService} from 'src/user/user.service'
+import {UserService} from '../user/user.service'
+import {RoleService} from '../role/role.service'
 import {PostgresErrorCode} from '../common/database/postgresErrorCodes.enum'
 import {JwtService} from '@nestjs/jwt'
 import {TokenPayload} from './tokenPayload.interface'
 import * as bcrypt from 'bcrypt'
 import {CreateUserDto} from '../user/user.dto'
+import {Role} from '../role/role.entity'
 
 @Injectable()
 export class AuthenticationService {
     constructor(
         private readonly userService: UserService,
+        private readonly roleService: RoleService,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
     ) {}
 
-    public getCookieWithJwtToken(userId: number, name: string) {
-        const payload: TokenPayload = {userId, name} // , name
+    public async getCookieWithJwtToken(userId: number, roleId: number) {
+        const role: Role = await this.roleService.getById(roleId)
+        const payload: TokenPayload = {userId, roleName: role.name} // , name
 
         const token = this.jwtService.sign(payload)
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get<number>(

@@ -24,7 +24,11 @@ export class User {
     @Column({type: 'varchar', length: 1500})
     photourl: string
 
-    @OneToOne(type => Role)
-    @JoinColumn({name: 'roleId'})
+    @OneToOne(type => Role, {
+        cascade: true,
+        eager: true,
+        nullable: false,
+    })
+    @JoinColumn({name: 'roleId', referencedColumnName: 'id'})
     role: Role
 }

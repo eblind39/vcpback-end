@@ -3,15 +3,22 @@ import {InjectRepository} from '@nestjs/typeorm'
 import {User} from './user.entity'
 import {CreateUserDto} from './user.dto'
 import {Repository} from 'typeorm'
+import {RoleService} from '../role/role.service'
+import {Role} from '../role/role.entity'
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
+        private readonly roleService: RoleService,
     ) {}
 
     async create(userData: CreateUserDto) {
-        const newUser: User = await this.userRepository.create(userData)
+        const role: Role = await this.roleService.getById(userData.roleId)
+        const newUser: User = await this.userRepository.create({
+            ...userData,
+            role,
+        })
         await this.userRepository.save(newUser)
         return newUser
     }

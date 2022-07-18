@@ -19,8 +19,8 @@ export class CreateUserDto {
 
     @IsString()
     @Length(0, 1500)
-    photourl: string
+    public photourl: string
 
     @IsNumber()
-    roleId: number
+    public roleId: number
 }

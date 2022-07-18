@@ -1,6 +1,6 @@
 interface TokenPayload {
     userId: number
-    name: string // change by the user role
+    roleName: string
 }
 
 export {TokenPayload}
