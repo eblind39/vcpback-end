@@ -2,7 +2,10 @@ import {
     IsBoolean,
     IsDate,
     IsDateString,
+    isNotEmpty,
     IsNotEmpty,
+    IsNumber,
+    isNumber,
     IsOptional,
     IsString,
     Length,
@@ -11,8 +14,12 @@ import {
 export class CreateVideoDto {
     @IsString()
     @IsNotEmpty()
-    @Length(3, 255)
+    @Length(3, 1500)
     public title: string
+
+    @IsNumber()
+    @IsNotEmpty()
+    public userId: number
 
     @IsBoolean()
     @IsNotEmpty()
@@ -24,5 +31,6 @@ export class CreateVideoDto {
     public videourl: string
 
     @IsDateString()
+    @IsOptional()
     creationDate!: Date
 }

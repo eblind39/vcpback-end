@@ -2,16 +2,19 @@ import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
-    OneToOne,
+    OneToMany,
+    ManyToOne,
     JoinColumn,
 } from 'typeorm'
+import {User} from '../user/user.entity'
+import {Likes} from '../likes/likes.entity'
 
 @Entity()
 export class Video {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @Column({type: 'varchar', length: 255})
+    @Column({type: 'varchar', length: 1500})
     title: string
 
     @Column({
@@ -26,4 +29,11 @@ export class Video {
 
     @Column({type: 'varchar', length: 1500})
     videourl: string
+
+    @ManyToOne(() => User, user => user.videos)
+    @JoinColumn({name: 'userId', referencedColumnName: 'id'})
+    user?: User
+
+    @OneToMany(() => Likes, likes => likes.video)
+    likes?: Likes[]
 }

@@ -7,7 +7,7 @@ export default class RoleSeeder implements Seeder {
         dataSource: DataSource,
         factoryManager: SeederFactoryManager,
     ): Promise<any> {
-        console.log('> Seeding Roles')
+        console.log('> 01 Seeding Roles')
 
         const repository = dataSource.getRepository<Role>(Role)
 
@@ -19,14 +19,5 @@ export default class RoleSeeder implements Seeder {
                 name: 'Student',
             },
         ])
-
-        // ---------------------------------------------------
-
-        // const roleFactory = await factoryManager.get(Role)
-        // // save 1 factory generated entity, to the database
-        // await roleFactory.save()
-
-        // // save 5 factory generated entities, to the database
-        // await roleFactory.saveMany(5)
     }
 }

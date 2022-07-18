@@ -16,11 +16,13 @@ import {HttpResponseCode} from '../common/http/responsecodes.enum'
 import {Response} from 'express'
 import JwtAuthenticationGuard from './jwt-authentication.guard'
 import {CreateUserDto} from '../user/user.dto'
+import {UserService} from '../user/user.service'
 
 @Controller('authentication')
 export class AuthenticationController {
     constructor(
         private readonly authenticationService: AuthenticationService,
+        private readonly userService: UserService,
     ) {}
 
     @UseGuards(JwtAuthenticationGuard)

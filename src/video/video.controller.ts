@@ -54,7 +54,7 @@ export class VideoController {
         return this.videoService.getById(id)
     }
 
-    // @UseGuards(JwtAuthenticationGuard)
+    @UseGuards(JwtAuthenticationGuard)
     @Get()
     async paginate(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
@@ -65,7 +65,13 @@ export class VideoController {
         return this.videoService.paginate({
             page,
             limit,
-            route: 'http://localhost:3007/videos/paginate',
+            route: '/videos/paginate',
         })
+    }
+
+    @UseGuards(JwtAuthenticationGuard)
+    @Get(':userId/list')
+    async getVideosByUserId(@Param('userId', ParseIntPipe) userId: number) {
+        return this.videoService.getVideosByUserId(userId)
     }
 }

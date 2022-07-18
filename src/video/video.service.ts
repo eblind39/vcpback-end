@@ -4,17 +4,23 @@ import {Video} from './video.entity'
 import {CreateVideoDto} from './video.dto'
 import {Repository} from 'typeorm'
 import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate'
+import {UserService} from '../user/user.service'
 
 @Injectable()
 export class VideoService {
     constructor(
         @InjectRepository(Video)
         private readonly videoRepository: Repository<Video>,
-        @InjectRepository(Video) private readonly repository: Repository<Video>,
+        private readonly userService: UserService,
     ) {}
 
     async create(videoData: CreateVideoDto) {
-        const newVideo: Video = await this.videoRepository.create(videoData)
+        const user = await this.userService.getById(videoData.userId)
+        const newVideo: Video = await this.videoRepository.create({
+            ...videoData,
+            user,
+        })
+
         await this.videoRepository.save(newVideo)
         return newVideo
     }
@@ -52,9 +58,21 @@ export class VideoService {
     }
 
     async paginate(options: IPaginationOptions): Promise<Pagination<Video>> {
-        const queryBuilder = this.repository.createQueryBuilder('c')
+        const queryBuilder = this.videoRepository.createQueryBuilder('c')
         queryBuilder.orderBy('c.title', 'DESC') // Or whatever you need to do
 
         return paginate<Video>(queryBuilder, options)
+    }
+
+    async getVideosByUserId(userId: number) {
+        const videos: Video[] = await this.videoRepository
+            .createQueryBuilder('videos')
+            .innerJoinAndSelect('videos.user', 'user')
+            .select(['videos'])
+            .where('user.id = :userId', {userId})
+            .getMany()
+
+        if (videos) return videos
+        else return []
     }
 }

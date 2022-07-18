@@ -2,10 +2,12 @@ import {Module} from '@nestjs/common'
 import {ConfigModule} from '@nestjs/config'
 import {TypeOrmModule} from '@nestjs/typeorm'
 import {AuthenticationModule} from './authentication/authentication.module'
-import {getEnvPath} from './common/helper/env.helper'
-import {TypeOrmConfigService} from './shared/typeorm/typeorm.service'
+import {getEnvPath} from './common/helpers/env.helper'
+import {TypeOrmConfigService} from './common/typeorm/typeorm.service'
 import {UserModule} from './user/user.module'
 import {VideoModule} from './video/video.module'
+import {LikesModule} from './likes/likes.module'
+import {FollowerModule} from './follower/follower.module'
 
 const envFilePath: string[] = getEnvPath(`${__dirname}/common/envs`)
 @Module({
@@ -18,6 +20,8 @@ const envFilePath: string[] = getEnvPath(`${__dirname}/common/envs`)
         AuthenticationModule,
         UserModule,
         VideoModule,
+        LikesModule,
+        FollowerModule,
     ],
     controllers: [],
     providers: [],
