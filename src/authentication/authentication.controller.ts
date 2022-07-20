@@ -27,21 +27,21 @@ export class AuthenticationController {
 
     @UseGuards(JwtAuthenticationGuard)
     @Get('whoami')
-    authenticate(@Req() request: RequestWithUser) {
+    whoami(@Req() request: RequestWithUser) {
         const user: User = request.user
         user.password = undefined
         return user
     }
 
     @Post('signup')
-    async register(@Body() registrationData: CreateUserDto) {
+    async signUp(@Body() registrationData: CreateUserDto) {
         return this.authenticationService.register(registrationData)
     }
 
     @UseGuards(LocalAuthenticationGuard)
     @HttpCode(HttpResponseCode.OK)
     @Post('signin')
-    async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
+    async signIn(@Req() request: RequestWithUser, @Res() response: Response) {
         const user: User = request.user
         const cookie = await this.authenticationService.getCookieWithJwtToken(
             user.id,
@@ -55,10 +55,11 @@ export class AuthenticationController {
     }
 
     @UseGuards(JwtAuthenticationGuard)
-    @Post('logout')
-    async logOut(@Req() resquest: RequestWithUser, @Res() response: Response) {
+    @Post('signout')
+    async signOut(@Req() resquest: RequestWithUser, @Res() response: Response) {
+        response.setHeader('Access-Control-Expose-Headers', 'vcp-jwt')
         response.setHeader(
-            'Set-Cookie',
+            'vcp-jwt',
             this.authenticationService.getCookieForLogOut(),
         )
         return response.sendStatus(HttpResponseCode.OK)
