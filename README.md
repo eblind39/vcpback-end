@@ -1,8 +1,14 @@
+# Welcome to Video Creator Platform API
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="https://typeorm.io/" target="blank"><img src="https://img.stackshare.io/service/7419/20165699.png" width="200" alt="TypeORM Logo" /></a>
+  <a href="https://typescriptlang.org/" target="blank"><img src="https://cdn-icons-png.flaticon.com/512/919/919832.png" width="180" alt="Typescript Logo" /></a>
+  <a href="https://www.postgresql.org/" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/1200px-Postgresql_elephant.svg.png" width="180" alt="Postgres Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-image]:
+    https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
@@ -26,7 +32,30 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+#
+
+# Docker setup
+
+```bash
+# Download the official postgres docker image and run a container
+$ docker run --name vcpdb-pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=vcpdb -d postgres
+```
+
+## Database credentials
+
+| _host_: localhost
+
+| _port_: 5432
+
+| _database_: vcpdb
+
+| _user_: postgres
+
+| _password_: postgres
+
+#
+
+# Installation
 
 ```bash
 $ npm install
@@ -35,38 +64,37 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+> **_NOTE:_** TypeOrm is set with the flag _synchronize=true_, which enables the
+> creation of the tables with the execution of the above command..
+
+<p>The <a href="http://localhost:3007/api" target="_blank">API</a> service runs in the port 3007.</p>
+
+## Seeders
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Initial data for Role, User and Videos
+$ npm run seed
 ```
+
+## Swagger
+
+<p>Go to <a href="http://localhost:3007/api" target="_blank">Swagger API</a> to watch the endpoints.</p>
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors
+and support by the amazing backers. If you'd like to join them, please
+[read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+-   Website - [https://nestjs.com](https://nestjs.com/)
+-   Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
