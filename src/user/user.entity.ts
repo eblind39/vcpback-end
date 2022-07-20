@@ -28,7 +28,7 @@ export class User {
     @Column({type: 'varchar', length: 500})
     password: string
 
-    @Column({type: 'varchar', length: 1500})
+    @Column({type: 'varchar', length: 1500, nullable: true})
     photourl: string
 
     @CreateDateColumn({

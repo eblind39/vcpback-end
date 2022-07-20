@@ -15,6 +15,11 @@ async function bootstrap() {
             extended: true,
         }),
     )
+    app.enableCors({
+        methods: ['POST', 'PUT', 'DELETE', 'GET'],
+        origin: ['http://localhost:3000', 'http://localhost:3007'],
+        credentials: true,
+    })
 
     const configSW = new DocumentBuilder()
         .setTitle('Video Creator Platform - API')

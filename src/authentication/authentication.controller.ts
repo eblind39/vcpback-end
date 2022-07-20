@@ -33,22 +33,24 @@ export class AuthenticationController {
         return user
     }
 
-    @Post('register')
+    @Post('signup')
     async register(@Body() registrationData: CreateUserDto) {
         return this.authenticationService.register(registrationData)
     }
 
-    @HttpCode(HttpResponseCode.OK)
     @UseGuards(LocalAuthenticationGuard)
-    @Post('login')
+    @HttpCode(HttpResponseCode.OK)
+    @Post('signin')
     async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
         const user: User = request.user
         const cookie = await this.authenticationService.getCookieWithJwtToken(
             user.id,
             user.role.id,
         )
-        response.setHeader('Set-Cookie', cookie)
+        response.setHeader('Access-Control-Expose-Headers', 'vcp-jwt')
+        response.setHeader('vcp-jwt', cookie)
         user.password = undefined
+        console.log(response.getHeaders())
         return response.send(user)
     }
 

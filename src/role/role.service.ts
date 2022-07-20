@@ -33,4 +33,17 @@ export class RoleService {
             HttpStatus.NOT_FOUND,
         )
     }
+
+    async getRoles() {
+        const roles = await this.roleRepository
+            .createQueryBuilder('roles')
+            .select(['roles'])
+            .getMany()
+
+        if (roles) return roles
+        throw new HttpException(
+            'Likes with this user id do not exist',
+            HttpStatus.NOT_FOUND,
+        )
+    }
 }

@@ -8,6 +8,7 @@ import {TokenPayload} from './tokenPayload.interface'
 import * as bcrypt from 'bcrypt'
 import {CreateUserDto} from '../user/user.dto'
 import {Role} from '../role/role.entity'
+import {User} from '../user/user.entity'
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +24,7 @@ export class AuthenticationService {
         const payload: TokenPayload = {userId, roleName: role.name} // , name
 
         const token = this.jwtService.sign(payload)
-        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get<number>(
+        return `Authentication=${token}; Max-Age=${this.configService.get<number>(
             'JWT_EXPIRATION_TIME',
         )}s`
     }
@@ -40,8 +41,12 @@ export class AuthenticationService {
                 ...registrationData,
                 password: hashedPassword,
             })
-            createdUser.password = undefined
-            return createdUser
+            const user: User = await this.userService.getByEmail(
+                registrationData.email,
+            )
+            user.password = undefined
+
+            return user
         } catch (error) {
             console.log(error)
             if (error?.code === PostgresErrorCode.UniqueValidation) {
@@ -92,6 +97,6 @@ export class AuthenticationService {
     }
 
     public getCookieForLogOut() {
-        return `Authentication=; HttpOnly=; Max-Age=0`
+        return `Authentication=; Max-Age=0`
     }
 }
