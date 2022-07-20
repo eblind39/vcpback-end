@@ -82,7 +82,24 @@ $ npm run seed
 
 ## Swagger
 
-<p>Go to <a href="http://localhost:3007/api" target="_blank">Swagger API</a> to watch the endpoints.</p>
+<p>Go to <a href="http://localhost:3007/api" target="_blank">http://localhost:3007/api</a> to watch the endpoints and play around with them.</p>
+
+> **_NOTE:_** The only way I discovered to ensure the API consumption via Cookie
+> authentication was to get directly the generated cookie by the endpoint:
+> /authentication/signin, it comes within the Response Headers and you must set
+> the cookie in the browser.:
+>
+> _document.cookie =
+> 'Authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGVOYW1lIjoiU3R1ZGVudCIsImlhdCI6MTY1ODMzOTY2NiwiZXhwIjoxNjU4MzQzMjY2fQ.tIqAxRRiFTsV25dyvZdNhM38YL3T0eOYEQ1rECDhM2w;
+> Max-Age=3600s'_
+>
+> You can use any of the user registered by the seeds, for example:
+>
+> _Username:_ clementine@yesenia.net
+>
+> _Password_ 12345
+>
+> Every user's password is the same: 12345
 
 ## Support
 
