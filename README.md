@@ -1,4 +1,4 @@
-# Welcome to Video Creator Platform API
+# Welcome to the Video Creator Platform API
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
@@ -55,7 +55,7 @@ $ docker run --name vcpdb-pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_
 
 #
 
-# Installation
+# Install NPM dependencies
 
 ```bash
 $ npm install
