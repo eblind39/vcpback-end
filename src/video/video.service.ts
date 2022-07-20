@@ -27,7 +27,8 @@ export class VideoService {
 
     async update(id: number, videoData: CreateVideoDto) {
         let video: Video = await this.getById(id)
-        video = {...videoData, id, published: video.published}
+        const user = await this.userService.getById(videoData.userId)
+        video = {...videoData, id, published: video.published, user}
         await this.videoRepository.save(video)
         return video
     }
@@ -68,7 +69,7 @@ export class VideoService {
         const videos: Video[] = await this.videoRepository
             .createQueryBuilder('videos')
             .innerJoinAndSelect('videos.user', 'user')
-            .select(['videos'])
+            .select(['videos', 'user'])
             .where('user.id = :userId', {userId})
             .getMany()
 

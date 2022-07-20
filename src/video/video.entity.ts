@@ -30,9 +30,11 @@ export class Video {
     @Column({type: 'varchar', length: 1500})
     videourl: string
 
-    @ManyToOne(() => User, user => user.videos)
+    @ManyToOne(() => User, user => user.videos, {
+        eager: true,
+    })
     @JoinColumn({name: 'userId', referencedColumnName: 'id'})
-    user?: User
+    user: User
 
     @OneToMany(() => Likes, likes => likes.video)
     likes?: Likes[]
