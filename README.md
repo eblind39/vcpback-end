@@ -43,15 +43,15 @@ $ docker run --name vcpdb-pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_
 
 ## Database credentials
 
-| _host_: localhost
-
-| _port_: 5432
-
-| _database_: vcpdb
-
-| _user_: postgres
-
-| _password_: postgres
+> _host_: localhost
+>
+> _port_: 5432
+>
+> _database_: vcpdb
+>
+> _user_: postgres
+>
+> _password_: postgres
 
 #
 
@@ -87,7 +87,7 @@ $ npm run seed
 > **_NOTE:_** The only way I discovered to ensure the API consumption via Cookie
 > authentication was to get directly the generated cookie by the endpoint:
 > /authentication/signin, it comes within the Response Headers and you must set
-> the cookie in the browser.:
+> the cookie in the browser (Javascript console):
 >
 > _document.cookie =
 > 'Authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGVOYW1lIjoiU3R1ZGVudCIsImlhdCI6MTY1ODMzOTY2NiwiZXhwIjoxNjU4MzQzMjY2fQ.tIqAxRRiFTsV25dyvZdNhM38YL3T0eOYEQ1rECDhM2w;
