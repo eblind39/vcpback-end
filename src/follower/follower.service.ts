@@ -50,7 +50,7 @@ export class FollowerService {
             .innerJoinAndSelect('follow.userFollower', 'follower')
             .innerJoinAndSelect('follow.userFollowed', 'followed')
             .select(['follow'])
-            .where('follower.id = :userId', {userIdFollower})
+            .where('follower.id = :userIdFollower', {userIdFollower})
             .andWhere('followed.id = :userIdFollowed', {userIdFollowed})
             .getOne()
 
@@ -68,6 +68,7 @@ export class FollowerService {
             .innerJoinAndSelect('follow.userFollowed', 'followed')
             .select(['follow', 'followed'])
             .where('follower.id = :userFollowerId', {userFollowerId})
+            .andWhere('follow.unfollowDate IS NULL')
             .getMany()
 
         if (followed) return followed

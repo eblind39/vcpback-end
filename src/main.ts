@@ -28,9 +28,26 @@ async function bootstrap() {
         )
         .setVersion('1.0')
         .addTag('vcp')
+        .addCookieAuth(
+            'vcp-jwt',
+            {
+                name: 'vcp-jwt',
+                type: 'http',
+                in: 'Header',
+                scheme: 'Bearer',
+            },
+            'vcp-jwt-cookie',
+        )
         .build()
     const documentSW = SwaggerModule.createDocument(app, configSW)
-    SwaggerModule.setup('api', app, documentSW)
+    SwaggerModule.setup('api', app, documentSW, {
+        swaggerOptions: {
+            requestInterceptor: req => {
+                req.credentials = 'include'
+                return req
+            },
+        },
+    })
 
     const config: ConfigService = app.get(ConfigService)
     const port: number = config.get<number>('PORT')

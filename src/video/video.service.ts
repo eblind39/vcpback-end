@@ -20,8 +20,8 @@ export class VideoService {
             ...videoData,
             user,
         })
-
         await this.videoRepository.save(newVideo)
+        newVideo.user.password = undefined
         return newVideo
     }
 
@@ -30,6 +30,7 @@ export class VideoService {
         const user = await this.userService.getById(videoData.userId)
         video = {...videoData, id, published: video.published, user}
         await this.videoRepository.save(video)
+        video.user.password = undefined
         return video
     }
 
@@ -44,6 +45,7 @@ export class VideoService {
 
     async getById(id: number) {
         const video: Video = await this.videoRepository.findOneBy({id})
+        video.user.password = undefined
         if (video) return video
         throw new HttpException(
             'Video with this id does not exist',
@@ -55,6 +57,7 @@ export class VideoService {
         const video: Video = await this.getById(id)
         video.published = !video.published
         await this.videoRepository.save(video)
+        video.user.password = undefined
         return video
     }
 
@@ -69,7 +72,14 @@ export class VideoService {
         const videos: Video[] = await this.videoRepository
             .createQueryBuilder('videos')
             .innerJoinAndSelect('videos.user', 'user')
-            .select(['videos', 'user'])
+            .select([
+                'videos',
+                'user.id',
+                'user.name',
+                'user.email',
+                'user.photourl',
+                'user.createdAt',
+            ])
             .where('user.id = :userId', {userId})
             .getMany()
 
